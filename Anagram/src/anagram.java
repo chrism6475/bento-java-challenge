@@ -6,50 +6,60 @@
 	Output: 
 
 */
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class anagram {
 	
-	public static boolean checkAnagram(String worda, String wordb) {
+	/* 
+	 *  Function: checkAnagram. 
+	 *	Parameters: wordA - string, first word to check for pair
+	 *				wordB - string, second word to check
+	 *	Output: System.out - word pairs that are anagrams. 
+	*/
+	public static boolean checkAnagram(String wordA, String wordB) {
 		
-		if (worda.length() != wordb.length()) {
+		// If words are not the same length, exit function because they violate anagram rules. 
+		if (wordA.length() != wordB.length()) {
 			return false;
 		}
 		
-		if (worda == wordb) {
+		// Check if words are
+		if (wordA == wordB) {
 			return false;
 		}
 		
-		Map<Character, Integer> present_words = new HashMap<>();
+		// This hash map keeps track of chars/letters and their frequency per word
+		Map<Character, Integer> present_letters = new HashMap<>();
 		
-		for (char letter: worda.toCharArray())
+		for (char letter: wordA.toCharArray())
 		{
-			if (present_words.containsKey(letter)) {
-				present_words.put(letter, present_words.get(letter));
+			if (present_letters.containsKey(letter)) {
+				present_letters.put(letter, present_letters.get(letter));
 			}
 			else { 
-				present_words.put(letter, 1);
+				present_letters.put(letter, 1);
 			}
 		}
 		
-		for (char letter: wordb.toCharArray()) {
-			if (present_words.containsKey(letter)) {
-				present_words.put(letter, present_words.get(letter)-1);
-				if(present_words.get(letter) == 0) {
-					present_words.remove(letter);
+		for (char letter: wordB.toCharArray()) {
+			if (present_letters.containsKey(letter)) {
+				present_letters.put(letter, present_letters.get(letter)-1);
+				if(present_letters.get(letter) == 0) {
+					present_letters.remove(letter);
 				}
-			} else {
-			}
+			} 
 		}
-		
+		// If hash map is not empty, matching letters in words were not found. 
+		if (present_letters.size() != 0) {
+			return false;
+		}
 		return true;
 	}
-	/* Function Identify Anagram
-		Parameters: words - String[], array of words to identify anagrams
-		Output: System.out word pairs that are anagrams. 
-	
+	/* 
+	 *  Function Identify Anagram
+	 *	Parameters: words - String[], array of words to identify anagrams
+	 *	Output: System.out word pairs that are anagrams. 
 	*/
 	public static void identifyAnagram(String[] words) {
 		
