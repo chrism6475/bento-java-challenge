@@ -12,17 +12,18 @@
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Collections;
+import java.util.Scanner;
 
 public class Reader {
 	public static void search_directory(String directory, ArrayList<File> file_list) {
 		File [] files;
+		
 		try {
 			File file_object = new File(directory);
 			files = file_object.listFiles();
-
+			
 			for(File file: files) {
 				
 				if(file.isDirectory()) {
@@ -38,6 +39,8 @@ public class Reader {
 	public static void open__home_directory(String directory) {		
 		ArrayList<File> files = new ArrayList<File>();
 		search_directory(directory, files);
+		
+		// Sort list of files in directory by each file's size. 
 		Collections.sort(files, new Comparator<File>() {
 
 			@Override
@@ -46,14 +49,20 @@ public class Reader {
 			}
 			
 		});
+		
+		// Output: Print File path, name, and size in order from smallest file to largest (inclusive of directories). 
 		for(File file: files) {
 			System.out.println("FilePath: "+ file.getPath() + " , FileName: " + file.getName() +" , Size: " + file.length());
 		}
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		open__home_directory("../Directory Reader/");
+		// Retrieves directory to search from user. Ex. input: ../Directory Reader/
+		Scanner io_reader = new Scanner(System.in);
+		System.out.println("Enter a file path: ");
+		String input = io_reader.nextLine();
+		io_reader.close();
+		open__home_directory(input);
 
 	}
 
